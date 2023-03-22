@@ -5,6 +5,8 @@
   import '@tensorflow/tfjs-backend-webgl';
   import { onMount } from 'svelte';
 
+  import { setPose } from '@stores/poseStore'
+
   let video
   let canvas
   let ctx
@@ -83,7 +85,7 @@
                   //drawKeypoints(pose.keypoints);
                   drawKeypointsColor(pose.keypoints);
                   drawSkeleton(pose.keypoints);
-                  last_keypoints = pose.keypoints3D
+                  setPose( pose.keypoints3D )
               }
           }
       }
@@ -167,18 +169,5 @@
            srclang="en"
            src="/">
   </video>
-  {#each last_keypoints as keypoint}
-    <div class="output">
-      <span class="name">{ keypoint.name}</span>  
-      <!-- X: across the sideways, increases leftwards -->
-      <span class="x">X: {parseInt( keypoint.x * 100 )}</span>  
-      <!-- Y: Height, increases downwards -->
-      <span class="y">Y: {parseInt( keypoint.y * 100 )}</span> 
-      <!-- Z: depth i quess but doesnt really work -->
-      <span class="x">Z: {parseInt( keypoint.z * 100 ) }</span>  
-      <!-- Score: the visibility of teh joint over 0.8 is good to use -->
-      <span class="x">Score: { keypoint.score }</span>  
-    </div>
-  {/each}
 </div>
 
