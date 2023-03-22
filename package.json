@@ -13,5 +13,9 @@
 		"svelte": "^3.54.0",
 		"vite": "^4.2.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@tensorflow-models/pose-detection": "^2.0.0",
+		"@tensorflow/tfjs-core": "^3.21.0"
+	}
 }
