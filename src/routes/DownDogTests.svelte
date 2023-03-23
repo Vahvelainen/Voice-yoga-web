@@ -1,23 +1,17 @@
 <script>
+  import Posecheck from '@lib/PoseCheck'
   import Pose from '@stores/poseStore' 
   import { onMount } from 'svelte';
 
   // Everything on cam
-  let onCam = false
-  function onCamCheck() {
-    let allThere = true
-    $Pose.keypoints.forEach( keypoint  => {
-      if (keypoint.score < 0.6 ) {
-        allThere = false
-      }
-    })
-    onCam = allThere
-  }
+  let onCam = new Posecheck( () => {
+    let visibility_scores = $Pose.keypoints.map( p => p.score )
+    return Math.min(...visibility_scores) > 0.6
+  })
 
   // Limbs on floor
   // Check that height of wrists and foots are max 20cm different from each other
-  let limbsDown = false
-  function limbsDownCheck() {
+  let limbsDown = new Posecheck( () => {
     let heights = [
       // Wrists
       $Pose.keypoints[15].y,
@@ -26,30 +20,29 @@
       $Pose.keypoints[31].y,
       $Pose.keypoints[32].y,
     ]
-    limbsDown = Math.max(...heights) - Math.min(...heights) < 0.2
-  }
+    return Math.max(...heights) - Math.min(...heights) < 0.2
+  })
 
   // Butt up
   // Are hips 50cm over the feet
-  let buttUp = false
-  function buttUpCheck() {
+  let buttUp = new Posecheck( () => {
     let footHeights = [
       // Foot     
       $Pose.keypoints[31].y,
       $Pose.keypoints[32].y,
     ]
     let buttHeights = [
-      // Wrists
+      // Hips
       $Pose.keypoints[23].y,
       $Pose.keypoints[24].y, 
     ]
-    buttUp =  Math.max(...footHeights) - Math.min(...buttHeights) > 0.5 
-  }
+    return Math.max(...footHeights) - Math.min(...buttHeights) > 0.5 
+  })
 
   function update() {
-    onCamCheck()
-    limbsDownCheck()
-    buttUpCheck()
+    onCam.check()
+    limbsDown.check()
+    buttUp.check()
   }
 
   onMount( () => {
@@ -61,9 +54,9 @@
 </script>
 
 <section>
-  <div style="background-color: {onCam ? 'green' : 'red'};"></div>
-  <div style="background-color: {limbsDown ? 'green' : 'red'};"></div>
-  <div style="background-color: {buttUp ? 'green' : 'red'};"></div>
+  <div style="background-color: {onCam.pass ? 'green' : 'red'};"></div>
+  <div style="background-color: {limbsDown.pass ? 'green' : 'red'};"></div>
+  <div style="background-color: {buttUp.pass ? 'green' : 'red'};"></div>
 </section>
 
 <style>
