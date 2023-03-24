@@ -33,7 +33,9 @@ function speakLines() {
 
   SpeechQueue.update( queue => {
     line = queue.lines? queue.lines.shift() : undefined
-    queue.speaking = queue.lines? true : false
+    if (!line) {
+      queue.speaking = false
+    }
     return queue
   })
 
