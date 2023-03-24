@@ -69,6 +69,11 @@ function matchCommand(text) {
 }
 
 function listen() {
+  VoiceCommandQueue.update( queue => {
+    queue.listening = true
+    return queue
+  }) 
+
   console.log('Listening voice commands');
   const SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
   const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
