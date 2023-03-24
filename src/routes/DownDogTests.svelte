@@ -2,6 +2,7 @@
   import Posecheck from '@lib/PoseCheck'
   import Pose from '@stores/poseStore' 
   import { onMount } from 'svelte';
+  import Voiceline from '@lib/Voiceline.svelte';
 
   // Everything on cam
   let onCam = new Posecheck( () => {
@@ -39,10 +40,19 @@
     return Math.max(...footHeights) - Math.min(...buttHeights) > 0.5 
   })
 
+  let checkVals = []
+
   function update() {
     onCam.check()
     limbsDown.check()
     buttUp.check()
+
+    // svelte cant follow object values automatically
+    checkVals = [
+      onCam.pass,
+      limbsDown.pass,
+      buttUp.pass
+    ]
   }
 
   onMount( () => {
@@ -54,9 +64,20 @@
 </script>
 
 <section>
-  <div style="background-color: {onCam.pass ? 'green' : 'red'};"></div>
-  <div style="background-color: {limbsDown.pass ? 'green' : 'red'};"></div>
-  <div style="background-color: {buttUp.pass ? 'green' : 'red'};"></div>
+
+    <!-- https://www.masterclass.com/articles/downward-dog-explained -->
+ 
+
+  <Voiceline txt={'Welcome to voice yoga'}/>
+  
+  <Voiceline txt={'1. Get down on all fours. Start on the floor with your hands shoulder-width apart, with your shoulders above your wrists.'}/>
+  <Voiceline txt={'2. Lift your knees. Next, tuck your toes against the mat or ground, using that leverage to extend your legs and lift both knees into the air.'}/>
+  <Voiceline txt={'3. Extend. Extend and lengthen your spine, simultaneously pressing through the palms of your hands and balls of your feet.'}/>
+
+  {#each checkVals as val}
+    <div style="background-color: {val ? 'green' : 'red'};"></div>    
+  {/each}
+
 </section>
 
 <style>
@@ -64,5 +85,6 @@
     display: inline-block;
     height: 10em;
     width: 10em;
+    margin-right: 1em;
   }
 </style>
