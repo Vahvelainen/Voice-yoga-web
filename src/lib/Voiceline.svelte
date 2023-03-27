@@ -7,7 +7,6 @@
   export let txt = "Hello world"
 
   onMount( () => {
-    console.log($SpeechQueue.lines);
     if ( !$SpeechQueue.lines.includes(txt) ) {
       addVoiceLine(txt)
     }
