@@ -2,12 +2,15 @@
   //Just and element access to the store
 
   import { onMount } from "svelte"
-  import { addVoiceLine } from '@lib/speechQueue.js'
+  import { SpeechQueue, addVoiceLine } from '@lib/speechQueue.js'
 
   export let txt = "Hello world"
 
   onMount( () => {
-    addVoiceLine(txt)
+    console.log($SpeechQueue.lines);
+    if ( !$SpeechQueue.lines.includes(txt) ) {
+      addVoiceLine(txt)
+    }
   }) 
 
 

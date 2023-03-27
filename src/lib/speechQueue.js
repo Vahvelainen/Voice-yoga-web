@@ -11,7 +11,7 @@ const speechQueueTemplate = {
   speaking: false,
 }
 
-const SpeechQueue = writable(speechQueueTemplate);
+export const SpeechQueue = writable(speechQueueTemplate);
 
 // Add voiceline and speak remaining lines
 export const addVoiceLine = (line) => {
@@ -28,11 +28,21 @@ export const addVoiceLine = (line) => {
   }
 }
 
+export const deleteVoiceLine = ( line ) => {
+  SpeechQueue.update( queue => {
+    const index = queue.lines.indexOf(line);
+    if (index > -1) { // only splice array when item is found
+      queue.lines.splice(index, 1); // 2nd parameter means remove one item only
+    }
+    return queue
+  })
+}
+
 function speakLines() {
   let line
 
   SpeechQueue.update( queue => {
-    line = queue.lines? queue.lines.shift() : undefined
+    line = queue.lines? queue.lines[0] : undefined
     if (!line) {
       queue.speaking = false
     }
@@ -40,8 +50,8 @@ function speakLines() {
   })
 
   if (!line) return
-  console.log('Speaking the line: ', line);
 
+  console.log('Speaking the line: ', line);
   const synth = window.speechSynthesis;
 
   //Wait 1s before starting
@@ -54,6 +64,7 @@ function speakLines() {
 
     utterThis.onend = () => {
       //Do the next line
+      deleteVoiceLine(line)
       speakLines()
     }
 
