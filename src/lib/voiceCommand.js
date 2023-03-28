@@ -8,6 +8,7 @@ const voiceCommandQueueTemplate = {
     // {
     //   lines: [ 'hi,', 'hello', 'hello there' ],
     //   action: () => {},
+    //   delete_after: true
     // },
   ],
   listening: false,
@@ -17,11 +18,12 @@ const VoiceCommandQueue = writable(voiceCommandQueueTemplate)
 
 
 //Adds a voice regognition entry with action and returns a delete function
-export function addVoiceCommand( lines, action ) {
+export function addVoiceCommand( lines, action, deleteAfter = true ) {
   let listening
   let command = {
     lines: lines,
     action: action,
+    deleteAfter: deleteAfter,
   }
   VoiceCommandQueue.update( queue => {
     listening = queue.listening
@@ -64,7 +66,9 @@ function matchCommand(text) {
 
   if (match != undefined) {
     match.action()
-    deleteCommand(match)
+    if ( match.deleteAfter ) {
+      deleteCommand(match)
+    }
   }
 }
 

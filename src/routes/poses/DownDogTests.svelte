@@ -83,7 +83,6 @@
     <div style="background-color: {val ? 'green' : 'red'};"></div>    
   {/each}
 
-  <Voiceline txt={'Welcome to voice yoga'}/>
   <Voiceline txt={'Move in front of the device, so that you are fully in the picture'}/>
   {#if checkVals[0]}
     <Voiceline txt={'Get to all fours by plasing your hands on the floor in front of you, shoulder with apart'}/>

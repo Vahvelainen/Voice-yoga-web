@@ -1,23 +1,40 @@
 <script>
   import PoseDetection from "@lib/PoseDetection.svelte";
   import Keypoints from "./Keypoints.svelte";
-  import DownDogTests from "./DownDogTests.svelte";
-  import { addVoiceLine } from '@lib/speechQueue.js'
+  import DownDogTests from "./poses/DownDogTests.svelte";
+  import Voiceline from "@lib/Voiceline.svelte";
   import { addVoiceCommand } from '@lib/voiceCommand'
+  import { addVoiceLine } from '@lib/speechQueue.js'
   import { onMount } from "svelte";
 
-  onMount( () => {
+  let start_yoga = false
+
+  onMount(()=>{
     addVoiceCommand(
-      ['hello', 'hi'],
-      () => { addVoiceLine('hello for you too') }
+      ['start', 'begin', 'open', 'start session', "let's yoga", "start yoga"],
+      startProgram, false
+    )
+    addVoiceCommand(
+      ['stop', 'exit', 'cancel', 'quit'],
+      stopProgram, false
     )
   })
 
+  function startProgram() {
+    addVoiceLine('Beginning yoga lesson')
+    start_yoga = true
+  }
+
+  function stopProgram() {
+    addVoiceLine('lesson stopped')
+    start_yoga = false
+  }
+  
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-
+<Voiceline txt={'Welcome to voice yoga'}/>
 <PoseDetection/>
-<DownDogTests/>
+{#if start_yoga}
+  <DownDogTests/>
+{/if}
 <Keypoints/>
