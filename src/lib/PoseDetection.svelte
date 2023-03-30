@@ -5,7 +5,7 @@
   import '@tensorflow/tfjs-backend-webgl';
   import { onMount } from 'svelte';
 
-  import { setPose } from '@stores/poseStore'
+  import Pose, { setPose } from '@stores/poseStore'
 
   let video
   let canvas
@@ -78,19 +78,31 @@
       }
 
       ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
+      drawFrame();
+      
       if (poses && poses.length > 0) {
           for (const pose of poses) {
               if (pose.keypoints != null) {
                   //drawKeypoints(pose.keypoints);
                   drawKeypointsColor(pose.keypoints);
                   drawSkeleton(pose.keypoints);
-                  setPose( pose.keypoints3D )
+                  setPose( pose.keypoints3D, pose.keypoints )
               }
           }
       }
 
       window.requestAnimationFrame(predictPoses);
+  }
+
+  function drawFrame() {
+    ctx.strokeStyle = 'Yellow';
+    if ($Pose.onFrame) {
+        ctx.strokeStyle = 'Green';
+    }
+    const frame = new Path2D();
+    //Hardcoded boundary
+    frame.rect(50, 50, 540, 380);
+    ctx.stroke(frame);
   }
 
   function drawKeypoints(keypoints) {

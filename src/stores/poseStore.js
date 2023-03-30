@@ -3,7 +3,9 @@ import { writable } from 'svelte/store';
 // Model of empty Pose
 const poseTemplate = {
   available: false,
+  onFrame: false,
   keypoints: [],
+  keypoints2D: [],
 }
 
 const Pose = writable(poseTemplate);
@@ -16,12 +18,14 @@ export const resetPose = () => {
 }
 
 // Set function, also a reset if given an empty array
-export const setPose = (keypoints = [] ) => {
+export const setPose = (keypoints = [], keypoints2D = [] ) => {
   if (keypoints.length > 0) {
-    Pose.update( () => {
+    Pose.update( pose => {
       return {
         available: true,
         keypoints: keypoints,
+        keypoints2D: keypoints2D, //Delete this
+        onFrame: checkFrame(pose, pose.onFrame)
       }
     })
   } else {
@@ -30,6 +34,49 @@ export const setPose = (keypoints = [] ) => {
 }
 
 export default Pose;
+
+function checkFrame(pose, start_val = false) {
+    if (pose.keypoints.length == 0) {
+      return start_val
+    }
+
+    // Everything on cam check
+    let critical_scores = [
+      //Wrists
+      Math.max( pose.keypoints[15].score, pose.keypoints[16].score ),
+      //Foot
+      Math.max( pose.keypoints[31].score, pose.keypoints[32].score ),
+      //Hips
+      Math.max( pose.keypoints[23].score, pose.keypoints[24].score ),
+      //Shoulders
+      Math.max( pose.keypoints[11].score, pose.keypoints[12].score ),
+    ]
+
+    const scoresGood = Math.min(...critical_scores) > 0.8 
+
+    let frameGood = true
+    let critPointIndexes = [ 15, 16, 31, 32, 23, 24, 11, 12 ]
+
+    //Target square is drawn in PoseDetection.svelte
+    critPointIndexes.forEach(i => {
+      let point = pose.keypoints2D[i]
+      if ( point.x > 600 || point.y > 440 || point.x < 40 || point.y < 40 ) {
+        frameGood = false
+      }
+    })
+
+    if ( !start_val) {
+      return scoresGood && frameGood
+    }
+
+    if ( start_val && !scoresGood ) 
+    {
+      return scoresGood && frameGood
+    }
+
+    return start_val
+
+}
 
 /*
 
