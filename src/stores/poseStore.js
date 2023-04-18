@@ -6,6 +6,7 @@ const poseTemplate = {
   onFrame: false,
   keypoints: [],
   keypoints2D: [],
+  angles: {},
 }
 
 const Pose = writable(poseTemplate);
@@ -25,6 +26,7 @@ export const setPose = (keypoints = [], keypoints2D = [] ) => {
         available: true,
         keypoints: keypoints,
         keypoints2D: keypoints2D, //Delete this
+        angles: calculateAngles(keypoints),
         onFrame: checkFrame(pose, pose.onFrame)
       }
     })
@@ -34,6 +36,39 @@ export const setPose = (keypoints = [], keypoints2D = [] ) => {
 }
 
 export default Pose;
+
+// 2D keypoints are in the format [x, y]
+function calculateAngles(keypoints) {
+  const angleMap = {
+    'leftElbow': [11, 13, 15],
+    'rightElbow': [12, 14, 16],
+    'leftKnee': [23, 25, 27],
+    'righKnee': [24, 26, 28],
+    'leftShoulder': [14, 12, 24],
+    'rightShoulder': [13, 11, 23],
+    'leftHip': [12, 24, 26],
+    'rightHip': [11, 23, 25],
+  };
+
+  const angles = {};
+
+  for (const [jointName, jointIndices] of Object.entries(angleMap)) {
+    const [a, b, c] = jointIndices.map(index => keypoints[index]);
+    if (a && b && c) {
+      const radians = Math.atan2(c.y - b.y, c.x - b.x) - Math.atan2(a.y - b.y, a.x - b.x);
+      let angle = (radians * 180 / Math.PI + 360) % 360;
+      if (angle > 180) {
+        angle = 360 - angle;
+      }
+      const score = Math.min(a.score, b.score, c.score);
+      angles[jointName] = { angle: angle, score: score };
+    }
+  }
+  return angles;
+}
+
+
+
 
 function checkFrame(pose, start_val = false) {
     if (pose.keypoints.length == 0) {
