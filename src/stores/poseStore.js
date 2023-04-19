@@ -1,5 +1,11 @@
 import { writable } from 'svelte/store';
 
+export const videoParams = {
+  height: 480, // Best to be square for mobile devices
+  width: 480,
+  frame: 24, //The offset for the frame user needs to be in
+}
+
 // Model of empty Pose
 const poseTemplate = {
   available: false,
@@ -60,7 +66,11 @@ function checkFrame(pose, start_val = false) {
     //Target square is drawn in PoseDetection.svelte
     critPointIndexes.forEach(i => {
       let point = pose.keypoints2D[i]
-      if ( point.x > 600 || point.y > 440 || point.x < 40 || point.y < 40 ) {
+      if ( point.x > videoParams.height - videoParams.frame ||
+           point.y > videoParams.width - videoParams.frame  ||
+           point.x < videoParams.frame  ||
+           point.y < videoParams.frame 
+          ) {
         frameGood = false
       }
     })
@@ -69,8 +79,7 @@ function checkFrame(pose, start_val = false) {
       return scoresGood && frameGood
     }
 
-    if ( start_val && !scoresGood ) 
-    {
+    if ( start_val && !scoresGood ) {
       return scoresGood && frameGood
     }
 

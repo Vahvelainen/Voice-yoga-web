@@ -5,7 +5,7 @@
   import '@tensorflow/tfjs-backend-webgl';
   import { onMount } from 'svelte';
 
-  import Pose, { setPose } from '@stores/poseStore'
+  import Pose, { setPose, videoParams } from '@stores/poseStore'
 
   let video
   let canvas
@@ -35,8 +35,8 @@
   async function activateVideo() {
       if(navigator.mediaDevices.getUserMedia) {
           navigator.mediaDevices.getUserMedia({'video': {
-              width: '640',
-              height: '480'
+              width: String( videoParams.width ),
+              height: String( videoParams.height )
           }}).then(stream => {
                   video.srcObject = stream;
               })
@@ -101,7 +101,12 @@
     }
     const frame = new Path2D();
     //Hardcoded boundary
-    frame.rect(50, 50, 540, 380);
+    frame.rect( 
+        videoParams.frame,
+        videoParams.frame,
+        videoParams.width - 2 * videoParams.frame,
+        videoParams.height - 2 * videoParams.frame,
+    );
     ctx.stroke(frame);
   }
 
