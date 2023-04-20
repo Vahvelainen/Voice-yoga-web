@@ -43,13 +43,13 @@ export const setPose = (keypoints = [], keypoints2D = [] ) => {
 
 export default Pose;
 
-// 2D keypoints are in the format [x, y]
+// 3D keypoints are in the format [x, y]
 function calculateAngles(keypoints) {
   const angleMap = {
     'leftElbow': [11, 13, 15],
     'rightElbow': [12, 14, 16],
     'leftKnee': [23, 25, 27],
-    'righKnee': [24, 26, 28],
+    'rightKnee': [24, 26, 28],
     'leftShoulder': [14, 12, 24],
     'rightShoulder': [13, 11, 23],
     'leftHip': [12, 24, 26],
@@ -61,7 +61,12 @@ function calculateAngles(keypoints) {
   for (const [jointName, jointIndices] of Object.entries(angleMap)) {
     const [a, b, c] = jointIndices.map(index => keypoints[index]);
     if (a && b && c) {
-      const radians = Math.atan2(c.y - b.y, c.x - b.x) - Math.atan2(a.y - b.y, a.x - b.x);
+      const vectorAB = { x: b.x - a.x, y: b.y - a.y, z: b.z - a.z };
+      const vectorCB = { x: b.x - c.x, y: b.y - c.y, z: b.z - c.z };
+      const dotProduct = vectorAB.x * vectorCB.x + vectorAB.y * vectorCB.y + vectorAB.z * vectorCB.z;
+      const magnitudeAB = Math.sqrt(vectorAB.x * vectorAB.x + vectorAB.y * vectorAB.y + vectorAB.z * vectorAB.z);
+      const magnitudeCB = Math.sqrt(vectorCB.x * vectorCB.x + vectorCB.y * vectorCB.y + vectorCB.z * vectorCB.z);
+      let radians = Math.acos(dotProduct / (magnitudeAB * magnitudeCB));
       let angle = (radians * 180 / Math.PI + 360) % 360;
       if (angle > 180) {
         angle = 360 - angle;
