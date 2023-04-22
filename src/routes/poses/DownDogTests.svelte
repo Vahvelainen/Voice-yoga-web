@@ -3,14 +3,6 @@
   import Voiceline from '@lib/VoiceLine.svelte'
   import PoseCheck from '@lib/PoseCheck.svelte';
   import PoseCheckList from '@lib/PoseCheckList.svelte';
-
-  function onCamCheck() {
-    // onCam check moved to poseStore.js
-    if ( $Pose.onFrame ) {
-      return true
-    }
-    return false
-  }
   
   function limbsDownCheck() {
     let heights = [
@@ -53,8 +45,9 @@
   <!-- PoseCheckList Dispatches "complete" event when all test are passed -->
   <PoseCheckList on:complete={ () => console.log( 'yay ') }>
 
-    <!-- PoseCheck only shows its content when its activated -->
-    <PoseCheck test={onCamCheck}>
+    <!-- PoseChecks only shows its content when its activated -->
+
+    <PoseCheck test={ () => $Pose.onFrame }>
       <Voiceline txt={'Move in front of the device, so that you are fully in the picture'}/>
     </PoseCheck>
 
@@ -67,7 +60,7 @@
     </PoseCheck>
 
     <!-- Test can also be a boolean value as a function -->
-    <PoseCheck test={ () => true }>
+    <PoseCheck test={ () => false }>
       <Voiceline txt={'You are now in downwards facing dog. Hold the postion and breath in and out'}/>
     </PoseCheck>
 
