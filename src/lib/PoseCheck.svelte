@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte"
+  import { onDestroy, onMount } from "svelte"
 
   let pass = false
   let last_pass = 0
@@ -8,8 +8,9 @@
   export let timeout = 2000
   export let pass_timeout = 100
   export let active = true //Active by default but PoseCheckList will set it to false
-
   let elem
+  let updateIntervalID
+
 
   const observer = new MutationObserver(setActive);
   function setActive() {
@@ -33,8 +34,12 @@
 
   onMount( () => {
     checkTest()
-    setInterval(checkTest, 100)
+    updateIntervalID = setInterval(checkTest, 100)
     observer.observe( elem, { attributes: true } )
+  })
+
+  onDestroy( () => {
+    clearInterval(updateIntervalID)
   })
 
 </script>

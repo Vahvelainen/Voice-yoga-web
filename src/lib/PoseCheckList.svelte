@@ -1,10 +1,11 @@
 <script>
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
   const dispatch = createEventDispatcher()
 
   export let complete = false //compelete can use both as an event and as a bind
   let elem
   let children = []
+  let updateIntervalID
   
   function setActiveChild() {
     //Set every children inactive
@@ -25,6 +26,7 @@
       }
     }
 
+    //Dispatch event when all children are passed
     if (allChildPassed) {
       if (!complete) {
         complete = true
@@ -34,16 +36,17 @@
       complete = false
     }
   }
-
-  //TODO:
-  //Dispatch event when all children are passed
   
   onMount( () => {
     children = elem.children
     setActiveChild()
-    setInterval(setActiveChild, 50)
+    updateIntervalID = setInterval(setActiveChild, 50)
   })
-  
+
+  onDestroy( () => {
+    clearInterval(updateIntervalID)
+  })
+
 </script>
 
 <div bind:this={elem} id="poseCheckList">
