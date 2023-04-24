@@ -26,9 +26,9 @@
   // if not, advice to tilt the device more upright
   function feetInFrameTest() {
     let feetScores = [
-      // Foot     
-      $Pose.keypoints2D[31].y,
-      $Pose.keypoints2D[32].y, 
+      // Foot 
+      $Pose.keypoints[31].score,
+      $Pose.keypoints[32].score, 
     ]
     let feetHeights2D = [
       // Foot     
