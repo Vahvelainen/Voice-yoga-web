@@ -1,8 +1,8 @@
 <script>
   //Just and element access to the store
 
-  import { onMount } from "svelte"
-  import { SpeechQueue, addVoiceLine } from '@lib/speechQueue.js'
+  import { onDestroy, onMount } from "svelte"
+  import { SpeechQueue, addVoiceLine, deleteVoiceLine } from '@lib/speechQueue.js'
 
   export let txt = "Hello world"
 
@@ -12,6 +12,9 @@
     }
   }) 
 
+  onDestroy( () => {
+    deleteVoiceLine(txt)
+  })
 
 </script>
 

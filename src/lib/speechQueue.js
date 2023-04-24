@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 //Speech settings
 const voice = "Google UK English Female";
 const pitch = 1
-const rate = 1
+const rate = 0.8 //Speech rate slowed down due to user feedback
 
 // Model of empty Queue
 const speechQueueTemplate = {
@@ -56,6 +56,15 @@ function speakLines() {
 
   //Wait 1s before starting
   setTimeout(()=>{
+    //Check the line isnt deleted during timeout
+    let line2 = ''
+    SpeechQueue.update( queue => {
+      line2 = queue.lines? queue.lines[0] : undefined
+      return queue
+    })
+    //Abort if the line has been deleted
+    if (line2 != line) return
+
     const voices = synth.getVoices();
     const utterThis = new SpeechSynthesisUtterance(line)
     utterThis.voice = voices.find( v => v.name == voice)
