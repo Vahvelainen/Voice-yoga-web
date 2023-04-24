@@ -2,6 +2,7 @@
   import PoseDetection from "@lib/PoseDetection.svelte";
   import Keypoints from "./Keypoints.svelte";
   import DownDogTests from "./poses/DownDogTests.svelte";
+  import Setup from "@lib/Setup.svelte";
   import Voiceline from "@lib/Voiceline.svelte";
   import { addVoiceLine } from '@lib/speechQueue.js'
 
@@ -39,6 +40,8 @@
 
 <PoseDetection/>
 {#if start_yoga}
-  <DownDogTests/>
+  <Setup>
+    <DownDogTests/>
+  </Setup>
 {/if}
 <Keypoints/>
