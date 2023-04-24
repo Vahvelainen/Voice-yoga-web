@@ -1,0 +1,58 @@
+// The 1st pose
+<script>
+    import Pose from '@stores/poseStore' 
+    import Voiceline from '@lib/VoiceLine.svelte'
+    import PoseCheck from '@lib/PoseCheck.svelte';
+    import PoseCheckList from '@lib/PoseCheckList.svelte';
+    
+    function feetTogetherCheck() {
+      // Check that feet are together within a margin of 5cm
+      let margin = 0.05
+      let distance = Math.abs($Pose.keypoints[27].x - $Pose.keypoints[28].x)
+      if (distance < margin) {
+        return true
+      }
+      return false
+    }
+  
+    function armsDownCheck() {
+      // from left to right + to - 
+      // Check that wrists are below waist
+      let right_wrist_check = $Pose.keypoints[24].y - $Pose.keypoints[16].y
+      let left_wrist_check = $Pose.keypoints[23].y - $Pose.keypoints[15].y
+      // Check that palms are aside
+      let right_palm_aside_check = Math.abs($Pose.keypoints[16].x - $Pose.keypoints[24].x)
+      let left_palm_aside_check = Math.abs($Pose.keypoints[15].x - $Pose.keypoints[23].x)
+      if (left_wrist_check < 0.05 && right_wrist_check < 0.05 && right_palm_aside_check > 0.05 && left_palm_aside_check > 0.05) {
+        return true
+      }
+      return false
+    }
+  
+</script>
+<section>
+<!-- PoseCheckList activates elements inside it one by one -->
+<!-- PoseCheckList Dispatches "complete" event when all test are passed -->
+<PoseCheckList on:complete={ () => console.log( 'yay ') }>
+
+    <!-- PoseChecks only shows its content when its activated -->
+  
+    <PoseCheck test={ () => $Pose.onFrame }>
+      <Voiceline txt={'Stand at the front of your mat with your feet together and your hands hanging down on your sides'}/>
+    </PoseCheck>
+  
+    <PoseCheck test={feetTogetherCheck}>
+      <Voiceline txt={'Make sure your feet are together and aligned'}/>
+    </PoseCheck>
+  
+    <PoseCheck test={armsDownCheck}>
+      <Voiceline txt={'Relax your arms and let them hang naturally on the sides of your body'}/>
+    </PoseCheck>
+  
+    <!-- Test can also be a boolean value as a function -->
+    <PoseCheck test={ () => false }>
+      <Voiceline txt={'You are now in the Mountain Pose. Hold the pose and breathe deeply'}/>
+    </PoseCheck>
+  
+  </PoseCheckList>
+</section>
