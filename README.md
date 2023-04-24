@@ -3,6 +3,16 @@
 A web based yoga application for blind people. The application uses image regocnition to give user advice into getting to the yoga positions. For interaction, the aplication use a combination of text to speech, voice commands and graphical user interface.
 Course project for the course CS-E4200 - Emergent User interfaces 2023
 
+## Using the app
+The app is hosted on https://voiceyoga.web.app/ 
+Note: the version might not be up to date and the Voice API doens't work on mobile
+
+- When opening the page, the app should greet user by saying "Welcome to voice yoga"
+- User can start yoga by either saying "start", "begin", "start yoga" or pressing the "start" button.
+- The program guides user with voice and text feedback based on the posedetection model:
+    1. First in guiding the user in centered in front of the camera
+    2. Then, a trough a simple version of downwards facing dog
+
 ## Framework
 
 The framework is javascript based sveltekit. See https://kit.svelte.dev/
@@ -32,7 +42,7 @@ npm run build
 ```
 You can preview the production build with `npm run preview`.
 
-To deoloy to Firebase
+To deploy to Firebase (needs user connected to Firebase project)
 ```bash
 firebase deploy
 ```
