@@ -6,6 +6,8 @@
   import MountainPose_ArmRaised from "./poses/MountainPose_ArmRaised.svelte";
   import StandingForwardBend from "./poses/StandingForwardBend.svelte";
   import ForwardBend from "./poses/ForwardBend.svelte";
+  import PlankPose from "./poses/PlankPose.svelte";
+  import UpwardFacingDog from "./poses/UpwardFacingDog.svelte";
   import Setup from "@lib/Setup.svelte";
   import Voiceline from "@lib/Voiceline.svelte";
   import { addVoiceLine } from '@lib/speechQueue.js'
@@ -49,6 +51,8 @@
     <MountainPose_ArmRaised/>
     <StandingForwardBend/>
     <ForwardBend/>
+    <PlankPose/>
+    <UpwardFacingDog/>
     <DownDogTests/>
   </Setup>
 {/if}
