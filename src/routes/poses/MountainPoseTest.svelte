@@ -6,9 +6,12 @@
     import PoseCheckList from '@lib/PoseCheckList.svelte';
     
     function feetTogetherCheck() {
-      // Check that feet are together within a margin of 5cm
-      let margin = 0.05
-      let distance = Math.abs($Pose.keypoints[27].x - $Pose.keypoints[28].x)
+      // Check that feet are together within a margin of 10cm
+      let margin = 0.20
+      let distance = 0
+      //x + z distance
+      distance +=  Math.abs($Pose.keypoints[27].x - $Pose.keypoints[28].x)
+      distance +=  Math.abs($Pose.keypoints[27].z - $Pose.keypoints[28].z)
       if (distance < margin) {
         return true
       }
