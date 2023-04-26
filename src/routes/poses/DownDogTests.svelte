@@ -3,6 +3,9 @@
   import Voiceline from '@lib/VoiceLine.svelte'
   import PoseCheck from '@lib/PoseCheck.svelte';
   import PoseCheckList from '@lib/PoseCheckList.svelte';
+
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher()
   
   function limbsDownCheck() {
     let heights = [
@@ -40,17 +43,13 @@
 </script>
 
 <section>
+  <Voiceline txt={'Next is downwards facing dog'}/>
 
   <!-- PoseCheckList activates elements inside it one by one -->
   <!-- PoseCheckList Dispatches "complete" event when all test are passed -->
-  <PoseCheckList on:complete={ () => console.log( 'yay ') }>
+  <PoseCheckList on:complete={ () => dispatch('complete') }>
 
     <!-- PoseChecks only shows its content when its activated -->
-
-    <PoseCheck test={ () => $Pose.onFrame }>
-      <Voiceline txt={'Move in front of the device, so that you are fully in the picture'}/>
-    </PoseCheck>
-
     <PoseCheck test={limbsDownCheck}>
       <Voiceline txt={'Get to all fours by placing your hands on the floor in front of you, shoulder with apart'}/>
     </PoseCheck>
