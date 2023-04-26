@@ -8,9 +8,9 @@
   // Function to check if palms are on the mat
   function palmsOnMatCheck() {
     // Check that both palms are on the mat
-    let left_hand_check = Math.abs($Pose.keypoints[15].y - $Pose.keypoints[27].y)
-    let right_hand_check = Math.abs($Pose.keypoints[16].y - $Pose.keypoints[28].y)
-    if (left_hand_check < 10 && right_hand_check < 10) {
+    let right_hand_check = $Pose.keypoints[16].y - $Pose.keypoints[26].y
+    let left_hand_check = $Pose.keypoints[15].y - $Pose.keypoints[25].y
+      if (right_hand_check > 0 && left_hand_check > 0) {
       return true
     }
     return false

@@ -22,9 +22,9 @@
     // Function to check if hands are on the mat and knees are straight
     function forwardBendCheck() {
       // Check that hands are on the mat
-      let right_hand_check = $Pose.keypoints[16].y - $Pose.keypoints[28].y
-      let left_hand_check = $Pose.keypoints[15].y - $Pose.keypoints[27].y
-      if (right_hand_check < 0 && left_hand_check < 0) {
+      let right_hand_check = $Pose.keypoints[16].y - $Pose.keypoints[26].y
+      let left_hand_check = $Pose.keypoints[15].y - $Pose.keypoints[25].y
+      if (right_hand_check > 0 && left_hand_check > 0) {
         // Check that knees are straight
         let right_knee_check = $Pose.angles['rightKnee']
         let left_knee_check = $Pose.angles['leftKnee']
