@@ -14,6 +14,8 @@
 
   import VoiceButton from "../lib/VoiceButton.svelte";
 
+  let poseIndex = 0
+
   let start_yoga = false
 
   function startProgram() {
@@ -47,13 +49,15 @@
 <PoseDetection/>
 {#if start_yoga}
   <Setup>
-    <MountainPoseTest/>
-    <MountainPose_ArmRaised/>
-    <StandingForwardBend/>
-    <ForwardBend/>
-    <PlankPose/>
-    <UpwardFacingDog/>
-    <DownDogTests/>
+    {#if poseIndex == 0}
+      <MountainPoseTest on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 1}
+      <MountainPose_ArmRaised on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 2}
+      <DownDogTests on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 3}
+      <Voiceline txt={'Thats the program done, We hope you enjoyed and have a nice day ::)'}/>
+    {/if}
   </Setup>
 {/if}
 <Keypoints/>

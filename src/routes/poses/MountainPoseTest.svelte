@@ -4,6 +4,10 @@
     import Voiceline from '@lib/VoiceLine.svelte'
     import PoseCheck from '@lib/PoseCheck.svelte';
     import PoseCheckList from '@lib/PoseCheckList.svelte';
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher()
+
+    let complete = false
     
     function feetTogetherCheck() {
       // Check that feet are together within a margin of 10cm
@@ -33,17 +37,18 @@
     }
   
 </script>
+
 <section>
+
+  
 <!-- PoseCheckList activates elements inside it one by one -->
 <!-- PoseCheckList Dispatches "complete" event when all test are passed -->
-<PoseCheckList on:complete={ () => console.log( 'yay ') }>
+{#if !complete}
+  <Voiceline txt={'Stand at the front of your mat with your feet together and your hands hanging down on your sides'}/>
+  
+  <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
 
     <!-- PoseChecks only shows its content when its activated -->
-  
-    <PoseCheck test={ () => $Pose.onFrame }>
-      <Voiceline txt={'Stand at the front of your mat with your feet together and your hands hanging down on your sides'}/>
-    </PoseCheck>
-  
     <PoseCheck test={feetTogetherCheck}>
       <Voiceline txt={'Make sure your feet are together and aligned'}/>
     </PoseCheck>
@@ -51,11 +56,12 @@
     <PoseCheck test={armsDownCheck}>
       <Voiceline txt={'Relax your arms and let them hang naturally on the sides of your body'}/>
     </PoseCheck>
-  
-    <!-- Test can also be a boolean value as a function -->
-    <PoseCheck test={ () => false }>
-      <Voiceline txt={'You are now in the Mountain Pose. Hold the pose and breathe deeply'}/>
-    </PoseCheck>
-  
+        
   </PoseCheckList>
+  
+  <!-- Advice for after the pose is done and user is waiting -->
+  {:else}
+    <Voiceline txt={'You are now in the Mountain Pose. Hold the pose and breathe deeply'}/>
+  {/if}
+
 </section>
