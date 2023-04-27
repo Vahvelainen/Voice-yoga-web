@@ -4,7 +4,10 @@
   import Voiceline from '@lib/VoiceLine.svelte'
   import PoseCheck from '@lib/PoseCheck.svelte';
   import PoseCheckList from '@lib/PoseCheckList.svelte';
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher()
 
+  let complete = false
   // Function to check if palms are on the mat
   function palmsOnMatCheck() {
     // Check that both palms are on the mat
@@ -35,21 +38,24 @@
 </script>
 
 <section>
-  <PoseCheckList on:complete={() => console.log('yay')}>
-    <PoseCheck test={() => $Pose.onFrame}>
-      <Voiceline txt={'Place your palms again on the mat, and either jump or step backward so that you are on the upwards position of a push-up. Your shoulders should be over your wrists and your body in a straight line.'}/>
-    </PoseCheck>
+  {#if !complete}
+  <Voiceline txt={'Place your palms again on the mat, and either jump or step backward so that you are on the upwards position of a push-up. Your shoulders should be over your wrists and your body in a straight line.'}/>
 
-    <PoseCheck test={palmsOnMatCheck}>
-      <Voiceline txt={'Make sure both palms are on the mat.'}/>
-    </PoseCheck>
+    <!-- PoseCheckList activates elements inside it one by one -->
+    <!-- PoseCheckList Dispatches "complete" event when all test are passed -->
+    <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
 
-    <PoseCheck test={straightLineCheck}>
-      <Voiceline txt={'Make sure your shoulders are over your wrists and your body is in a straight line.'}/>
-    </PoseCheck>
+      <!-- PoseChecks only shows its content when its activated -->
+      <PoseCheck test={palmsOnMatCheck}>
+        <Voiceline txt={'Make sure both palms are on the mat.'}/>
+      </PoseCheck>
+  
+      <PoseCheck test={straightLineCheck}>
+        <Voiceline txt={'Make sure your shoulders are over your wrists and your body is in a straight line.'}/>
+      </PoseCheck>
 
-    <PoseCheck test={() => false}>
-      <Voiceline txt={'You are now in the Upward-Facing Dog pose. Hold the pose and breathe deeply.'}/>
-    </PoseCheck>
-  </PoseCheckList>
+    </PoseCheckList>
+  {:else}
+    <Voiceline txt={'You are now in the Plank Pose. Hold the pose and breathe deeply.'}/>
+  {/if}
 </section>

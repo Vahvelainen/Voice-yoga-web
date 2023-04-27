@@ -4,6 +4,10 @@
     import Voiceline from '@lib/VoiceLine.svelte'
     import PoseCheck from '@lib/PoseCheck.svelte';
     import PoseCheckList from '@lib/PoseCheckList.svelte';
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher()
+
+    let complete = false
   
     // Function to check if feet are hip-width apart and aligned
     function feetHipWidthCheck() {
@@ -40,22 +44,20 @@
   </script>
   
   <section>
-    <PoseCheckList on:complete={() => console.log('yay')}>
-      <PoseCheck test={() => $Pose.onFrame}>
-        <Voiceline txt={'Stand at the front of your mat with your feet hip-width apart and your hands hanging down on your sides'}/>
-      </PoseCheck>
-  
-      <PoseCheck test={feetHipWidthCheck}>
-        <Voiceline txt={'Make sure your feet are hip-width apart and aligned'}/>
-      </PoseCheck>
-  
-      <PoseCheck test={forwardBendCheck}>
-        <Voiceline txt={'Exhale, bend forward from your waist and bring your hands down to the mat, on the sides of your feet. Bend your knees as little as possible'}/>
-      </PoseCheck>
-  
-      <PoseCheck test={() => false}>
-        <Voiceline txt={'You are now in the Forward Bend pose. Hold the pose and breathe deeply'}/>
-      </PoseCheck>
-    </PoseCheckList>
+    {#if !complete}
+      <Voiceline txt={'Stand at the front of your mat with your feet hip-width apart and your hands hanging down on your sides'}/>
+      
+      <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
+        <PoseCheck test={feetHipWidthCheck}>
+          <Voiceline txt={'Make sure your feet are hip-width apart and aligned'}/>
+        </PoseCheck>
+
+        <PoseCheck test={forwardBendCheck}>
+          <Voiceline txt={'Exhale, bend forward from your waist and bring your hands down to the mat, on the sides of your feet. Bend your knees as little as possible'}/>
+        </PoseCheck>
+      </PoseCheckList>
+    <!-- Advice for after the pose is done and user is waiting -->
+    {:else}
+      <Voiceline txt={'You are now in the Forward Bend pose. Hold the pose and breathe deeply'}/>
+    {/if}
   </section>
-  

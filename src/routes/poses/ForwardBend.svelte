@@ -4,6 +4,10 @@
   import Voiceline from '@lib/VoiceLine.svelte'
   import PoseCheck from '@lib/PoseCheck.svelte'
   import PoseCheckList from '@lib/PoseCheckList.svelte'
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher()
+
+  let complete = false
 
   function feetHipWidthCheck() {
       // Check that feet are together within a margin of 10cm
@@ -35,23 +39,20 @@
   }
 </script>
 
-<section>
-  <PoseCheckList on:complete={() => console.log('yay')}>
-    
-    <PoseCheck test={() => $Pose.onFrame}>
-      <Voiceline txt={'Come to a standing position with your feet hip-width apart and your hands by your sides'}/>
-    </PoseCheck>
+<section> 
+  {#if !complete}
+    <Voiceline txt={'Come to a standing position with your feet hip-width apart and your hands by your sides'}/>
 
-    <PoseCheck test={feetHipWidthCheck}>
-      <Voiceline txt={'Make sure your feet are hip-width apart and aligned'}/>
-    </PoseCheck>
-
-    <PoseCheck test={forwardBendCheck}>
-      <Voiceline txt={'Inhale and straighten your back so that you’re looking forward. Keep your fingertips touching the mat'}/>
-    </PoseCheck>
-
-    <PoseCheck test={ () => false }>
-      <Voiceline txt={'You are now in the Forward Bend pose. Hold the pose and breathe deeply'}/>
-    </PoseCheck>
-  </PoseCheckList>
+    <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
+      <PoseCheck test={feetHipWidthCheck}>
+        <Voiceline txt={'Make sure your feet are hip-width apart and aligned'}/>
+      </PoseCheck>
+  
+      <PoseCheck test={forwardBendCheck}>
+        <Voiceline txt={'Inhale and straighten your back so that you’re looking forward. Keep your fingertips touching the mat'}/>
+      </PoseCheck>
+    </PoseCheckList>
+  {:else}
+    <Voiceline txt={'You are now in the Forward Bend pose. Hold the pose and breathe deeply'}/>
+  {/if}
 </section>
