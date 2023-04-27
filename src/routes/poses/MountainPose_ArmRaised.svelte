@@ -4,9 +4,10 @@
     import Voiceline from '@lib/VoiceLine.svelte'
     import PoseCheck from '@lib/PoseCheck.svelte';
     import PoseCheckList from '@lib/PoseCheckList.svelte';
-
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher()
+
+    let complete = false
 
     function feetTogetherCheck() {
       // Check that feet are together within a margin of 20cm
@@ -36,37 +37,25 @@
       }
       return false
     }
-
-    //wait 15s
-    let countDown15sStart = undefined
-    function startCounDown() {
-      const now = Date.now()
-      if ( !countDown15sStart ) {
-        countDown15sStart = now
-      }
-      if ( now - countDown15sStart > 15000 ) {
-        return true
-      }
-      return false
-    }
   
   </script>
   
   <section>
-    <Voiceline txt={'Stand at the front of your mat with your feet together and your hands raised up'}/>
+    {#if !complete}
+      <Voiceline txt={'Stand at the front of your mat with your feet together and your hands raised up'}/>
+      
+      <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
+        <PoseCheck test={feetTogetherCheck}>
+          <Voiceline txt={'Make sure your feet are together and aligned'}/>
+        </PoseCheck>
     
-    <PoseCheckList on:complete={ () => dispatch('complete') }>
-      <PoseCheck test={feetTogetherCheck}>
-        <Voiceline txt={'Make sure your feet are together and aligned'}/>
-      </PoseCheck>
-  
-      <PoseCheck test={armsUpCheck}>
-        <Voiceline txt={'Inhale, lift your arms up over-head, and bring your palms together'}/>
-      </PoseCheck>
-  
-      <PoseCheck test={startCounDown}>
-        <Voiceline txt={'You are now in the Mountain Pose with raised arms. Hold the pose and breathe deeply'}/>
-      </PoseCheck>
-    </PoseCheckList>
+        <PoseCheck test={armsUpCheck}>
+          <Voiceline txt={'Inhale, lift your arms up over-head, and bring your palms together'}/>
+        </PoseCheck>
+      </PoseCheckList>
+    <!-- Advice for after the pose is done and user is waiting -->
+    {:else}
+      <Voiceline txt={'You are now in the Mountain Pose with raised arms. Hold the pose and breathe deeply'}/>
+    {/if}
   </section>
   

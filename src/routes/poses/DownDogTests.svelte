@@ -3,9 +3,10 @@
   import Voiceline from '@lib/VoiceLine.svelte'
   import PoseCheck from '@lib/PoseCheck.svelte';
   import PoseCheckList from '@lib/PoseCheckList.svelte';
-
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher()
+
+  let complete = false
   
   function limbsDownCheck() {
     let heights = [
@@ -43,26 +44,24 @@
 </script>
 
 <section>
-  <Voiceline txt={'Next is downwards facing dog'}/>
+  {#if !complete}
+    <Voiceline txt={'Next is downwards facing dog'}/>
 
-  <!-- PoseCheckList activates elements inside it one by one -->
-  <!-- PoseCheckList Dispatches "complete" event when all test are passed -->
-  <PoseCheckList on:complete={ () => dispatch('complete') }>
+    <!-- PoseCheckList activates elements inside it one by one -->
+    <!-- PoseCheckList Dispatches "complete" event when all test are passed -->
+    <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
 
-    <!-- PoseChecks only shows its content when its activated -->
-    <PoseCheck test={limbsDownCheck}>
-      <Voiceline txt={'Get to all fours by placing your hands on the floor in front of you, shoulder with apart'}/>
-    </PoseCheck>
+      <!-- PoseChecks only shows its content when its activated -->
+      <PoseCheck test={limbsDownCheck}>
+        <Voiceline txt={'Get to all fours by placing your hands on the floor in front of you, shoulder with apart'}/>
+      </PoseCheck>
 
-    <PoseCheck test={buttUpCheck}>
-      <Voiceline txt={'Good! Now push through your legs and lift yout hips up high'}/>
-    </PoseCheck>
+      <PoseCheck test={buttUpCheck}>
+        <Voiceline txt={'Good! Now push through your legs and lift your hips up high'}/>
+      </PoseCheck>
 
-    <!-- Test can also be a boolean value as a function -->
-    <PoseCheck test={ () => false }>
-      <Voiceline txt={'You are now in downwards facing dog. Hold the postion and breath in and out'}/>
-    </PoseCheck>
-
-  </PoseCheckList>
-
+    </PoseCheckList>
+  {:else}
+    <Voiceline txt={'You are now in downwards facing dog. Hold the postion and breath in and out'}/>
+  {/if}
 </section>
