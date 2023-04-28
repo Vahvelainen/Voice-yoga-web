@@ -1,21 +1,7 @@
 <script>
   // Proof that poseStore works
   import Pose from '@stores/poseStore';
-  import { onMount, onDestroy } from 'svelte';
-
-  let angles = {};
-
-  onMount(() => {
-    // Subscribe to changes in poseStore
-    const unsubscribe = Pose.subscribe(pose => {
-      angles = pose.angles || {};
-    });
-
-    // Unsubscribe from poseStore when the component is destroyed
-    onDestroy(() => {
-      unsubscribe();
-    });
-  });
+  $: angles = $Pose.angles;
 </script>
 
 {#if $Pose.available}

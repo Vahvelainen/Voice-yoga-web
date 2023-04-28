@@ -38,6 +38,8 @@ export const deleteVoiceLine = ( line ) => {
   })
 }
 
+// speechSynhehesis reguires user to do an action before it is allowed,
+// Thankfully, onpenin the pose detection seems to allow it on desktop atleast
 function speakLines() {
   let line
 
@@ -50,6 +52,11 @@ function speakLines() {
   })
 
   if (!line) return
+
+  if (!'speechSynthesis' in window) {
+    console.log('Text-to-speech not supported.');
+    return
+  }
 
   console.log('Speaking the line: ', line);
   const synth = window.speechSynthesis;
@@ -73,6 +80,9 @@ function speakLines() {
     utterThis.voice = voices.find( v => v.name == voice)
     utterThis.pitch = pitch
     utterThis.rate = rate
+    // Always set the utterance language to the utterance voice's language
+    // to prevent unspecified behavior.
+    utterThis.lang = utterThis.voice.lang
 
     utterThis.onend = () => {
       //Do the next line
