@@ -63,7 +63,10 @@ function speakLines() {
       return queue
     })
     //Abort if the line has been deleted
-    if (line2 != line) return
+    if (line2 != line) {
+      speakLines()
+      return
+    }
 
     const voices = synth.getVoices();
     const utterThis = new SpeechSynthesisUtterance(line)
