@@ -1,4 +1,4 @@
-// The 4th pose
+// The 9th pose
 <script>
   import Pose from '@stores/poseStore'
   import Voiceline from '@lib/VoiceLine.svelte'
@@ -41,15 +41,15 @@
 
 <section> 
   {#if !complete}
-    <Voiceline txt={'Come to a standing position with your feet hip-width apart and your hands by your sides'}/>
+    <Voiceline txt={'Straighten your back so that your’re looking forward. Please recall the fourth pose you did previously'}/>
 
     <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
-      <PoseCheck test={feetHipWidthCheck}>
+      <!-- <PoseCheck test={feetHipWidthCheck}>
         <Voiceline txt={'Make sure your feet are hip-width apart and aligned'}/>
-      </PoseCheck>
+      </PoseCheck> -->
   
       <PoseCheck test={forwardBendCheck}>
-        <Voiceline txt={'Inhale and straighten your back so that you’re looking forward. Keep your fingertips touching the mat'}/>
+        <Voiceline txt={'Let your wrists rise from the mat but keep your fingertips touching the mat.'}/>
       </PoseCheck>
     </PoseCheckList>
   {:else}
