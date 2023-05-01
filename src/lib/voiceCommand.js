@@ -80,8 +80,8 @@ function listen() {
 
   console.log('Listening voice commands');
   const SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
-  const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
-  const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+  // const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
+  // const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
   // const colors = [
   //   "aqua",
