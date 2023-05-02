@@ -1,47 +1,47 @@
 // The 8th pose
 <script>
-    import Pose from '@stores/poseStore' 
-    import Voiceline from '@lib/VoiceLine.svelte'
-    import PoseCheck from '@lib/PoseCheck.svelte';
-    import PoseCheckList from '@lib/PoseCheckList.svelte';
-    import { createEventDispatcher } from 'svelte';
-    const dispatch = createEventDispatcher()
+  import Pose from '@stores/poseStore' 
+  import Voiceline from '@lib/VoiceLine.svelte'
+  import PoseCheck from '@lib/PoseCheck.svelte';
+  import PoseCheckList from '@lib/PoseCheckList.svelte';
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher()
 
-    let complete = false
-  
-    // Function to check if feet are hip-width apart and aligned
-    function feetHipWidthCheck() {
-      // Check that feet are together within a margin of 10cm
-      let margin = 0.20
-      let distance = 0
-      //x + z distance
-      distance +=  Math.abs($Pose.keypoints[27].x - $Pose.keypoints[28].x)
-      distance +=  Math.abs($Pose.keypoints[27].z - $Pose.keypoints[28].z)
-      if (distance > margin) {
-        return true
-      }
-      return false
+  let complete = false
+
+  // Function to check if feet are hip-width apart and aligned
+  function feetHipWidthCheck() {
+    // Check that feet are together within a margin of 10cm
+    let margin = 0.20
+    let distance = 0
+    //x + z distance
+    distance +=  Math.abs($Pose.keypoints[27].x - $Pose.keypoints[28].x)
+    distance +=  Math.abs($Pose.keypoints[27].z - $Pose.keypoints[28].z)
+    if (distance > margin) {
+      return true
     }
-  
-    // Function to check if hands are on the mat and knees are straight
-    function forwardBendCheck() {
-      // Check that hands are on the mat
-      let right_hand_check = $Pose.keypoints[16].y - $Pose.keypoints[26].y
-      let left_hand_check = $Pose.keypoints[15].y - $Pose.keypoints[25].y
-      if (right_hand_check > 0 && left_hand_check > 0) {
-        // Check that knees are straight
-        let right_knee_check = $Pose.angles['rightKnee']
-        let left_knee_check = $Pose.angles['leftKnee']
-        let right_hip_check = $Pose.angles['rightHip']
-        let left_hip_check = $Pose.angles['leftHip']
-        if ((right_knee_check > 150 && left_knee_check > 150)&&(right_hip_check < 50 || left_hip_check < 50)){
+    return false
+  }
+
+  // Function to check if hands are on the mat and knees are straight
+  function forwardBendCheck() {
+    // Check that hands are on the mat
+    let right_hand_check = $Pose.keypoints[16].y - $Pose.keypoints[26].y
+    let left_hand_check = $Pose.keypoints[15].y - $Pose.keypoints[25].y
+    let head_knee_distance = Math.min($Pose.keypoints[0].x - $Pose.keypoints[26].x, $Pose.keypoints[0].x - $Pose.keypoints[25].x)
+    if (right_hand_check > 0 && left_hand_check > 0) {
+      // Check that knees are straight
+      if ($Pose.keypoints[0].y > $Pose.keypoints[26].y || $Pose.keypoints[0].y > $Pose.keypoints[26].y){
+        if (head_knee_distance < 0.5) {
           return true
         }
       }
-      return false
+      // return true
     }
-  
-  </script>
+    return false
+  }
+
+</script>
 
   <section>
     {#if !complete}
@@ -58,6 +58,6 @@
       </PoseCheckList>
     <!-- Advice for after the pose is done and user is waiting -->
     {:else}
-      <Voiceline txt={'You are now in the Forward Bend pose. Hold the pose and breathe deeply'}/>
+      <Voiceline txt={'You are now in the Standing Forward Bend pose. Hold the pose and breathe deeply'}/>
     {/if}
   </section>

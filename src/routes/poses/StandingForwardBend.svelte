@@ -25,27 +25,27 @@
   
     // Function to check if hands are on the mat and knees are straight
     function forwardBendCheck() {
-      // Check that hands are on the mat
-      let right_hand_check = $Pose.keypoints[16].y - $Pose.keypoints[26].y
-      let left_hand_check = $Pose.keypoints[15].y - $Pose.keypoints[25].y
-      if (right_hand_check > 0 && left_hand_check > 0) {
-        // Check that knees are straight
-        let right_knee_check = $Pose.angles['rightKnee']
-        let left_knee_check = $Pose.angles['leftKnee']
-        let right_hip_check = $Pose.angles['rightHip']
-        let left_hip_check = $Pose.angles['leftHip']
-        if ((right_knee_check > 150 && left_knee_check > 150)&&(right_hip_check < 50 || left_hip_check < 50)){
+    // Check that hands are on the mat
+    let right_hand_check = $Pose.keypoints[16].y - $Pose.keypoints[26].y
+    let left_hand_check = $Pose.keypoints[15].y - $Pose.keypoints[25].y
+    let head_knee_distance = Math.min($Pose.keypoints[0].x - $Pose.keypoints[26].x, $Pose.keypoints[0].x - $Pose.keypoints[25].x)
+    if (right_hand_check > 0 && left_hand_check > 0) {
+      // Check that knees are straight
+      if ($Pose.keypoints[0].y > $Pose.keypoints[26].y || $Pose.keypoints[0].y > $Pose.keypoints[26].y){
+        if (head_knee_distance < 0.5) {
           return true
         }
       }
-      return false
+      // return true
     }
+    return false
+  }
   
   </script>
   
   <section>
     {#if !complete}
-      <Voiceline txt={'Stand at the front of your mat with your feet hip-width apart and your hands hanging down on your sides'}/>
+      <Voiceline txt={'Face the camera sideways. Stand at the front of your mat with your feet hip-width apart and your hands hanging down on your sides'}/>
       
       <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
         <PoseCheck test={feetHipWidthCheck}>
@@ -58,6 +58,6 @@
       </PoseCheckList>
     <!-- Advice for after the pose is done and user is waiting -->
     {:else}
-      <Voiceline txt={'You are now in the Forward Bend pose. Hold the pose and breathe deeply'}/>
+      <Voiceline txt={'You are now in the Standing Forward Bend pose. Hold the pose and breathe deeply'}/>
     {/if}
   </section>

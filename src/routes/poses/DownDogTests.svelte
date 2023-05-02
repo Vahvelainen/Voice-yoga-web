@@ -1,3 +1,4 @@
+# The 7th pose
 <script>
   import Pose from '@stores/poseStore' 
   import Voiceline from '@lib/VoiceLine.svelte'

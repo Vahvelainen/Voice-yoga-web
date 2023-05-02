@@ -13,6 +13,9 @@
   import { addVoiceLine } from '@lib/speechQueue.js'
 
   import VoiceButton from "../lib/VoiceButton.svelte";
+    import StandingForwardBend_2 from "./poses/StandingForwardBend_2.svelte";
+    import MountainPoseArmRaised_2 from "./poses/MountainPose_ArmRaised_2.svelte";
+    import ForwardBend_2 from "./poses/ForwardBend_2.svelte";
 
   let poseIndex = 0
 
@@ -54,8 +57,22 @@
     {:else if poseIndex == 1}
       <MountainPose_ArmRaised on:complete={ () => poseIndex += 1 }/>
     {:else if poseIndex == 2}
-      <DownDogTests on:complete={ () => poseIndex += 1 }/>
+      <StandingForwardBend on:complete={ () => poseIndex += 1 }/>
     {:else if poseIndex == 3}
+      <ForwardBend on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 4}
+      <PlankPose on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 5}
+      <UpwardFacingDog on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 6}
+      <DownDogTests on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 7}
+      <StandingForwardBend_2 on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 8}
+      <ForwardBend_2 on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 9}
+      <MountainPoseArmRaised_2 on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 10}
       <Voiceline txt={'Thats the program done, We hope you enjoyed and have a nice day ::)'}/>
     {/if}
   </Setup>

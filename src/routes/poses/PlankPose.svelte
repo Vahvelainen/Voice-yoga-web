@@ -21,16 +21,10 @@
 
   // Function to check if body is in a straight line
   function straightLineCheck() {
-    // Check that shoulders are over wrists
-    let shoulder_check = [$Pose.keypoints[12] - $Pose.keypoints[24], $Pose.keypoints[11] - $Pose.keypoints[23]]
-    let straight_check_left = $Pose.angles['leftHip']
-    let straight_check_right = $Pose.angles['rightHip']
-    // shoulder should higher than wrist
-    if (Math.max(...shoulder_check) < 0) {
-      // Check that body is in a straight line
-      if (straight_check_left > 150 && straight_check_right > 150) {
-        return true
-      }
+    let right_check = $Pose.keypoints[0].y - $Pose.keypoints[24].y
+    let left_check = $Pose.keypoints[0].y - $Pose.keypoints[23].y
+      if (right_check < 0 && left_check < 0) {
+      return true
     }
     return false
   }

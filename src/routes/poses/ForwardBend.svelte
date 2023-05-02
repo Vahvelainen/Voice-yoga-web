@@ -27,13 +27,16 @@
     // Check that fingertips are touching the mat
     let right_fingertip_check = $Pose.keypoints[12].y - $Pose.keypoints[28].y
     let left_fingertip_check = $Pose.keypoints[11].y - $Pose.keypoints[27].y
-    if (right_fingertip_check >= 0 && left_fingertip_check >= 0) {
+    if (right_fingertip_check >= -10 && left_fingertip_check >= -10) {
       // Check that the back is straight
-      let lefthip = $Pose.angles['leftHip']
-      let righthip = $Pose.angles['rightHip']
-      if (lefthip > 45 && righthip > 45 && lefthip < 90 && righthip < 90) {
-        return true
-      }
+      // let lefthip = $Pose.angles['leftHip']
+      // let righthip = $Pose.angles['rightHip']
+      if ($Pose.keypoints[0].y > $Pose.keypoints[24].y || $Pose.keypoints[0].y > $Pose.keypoints[23].y){
+        if ($Pose.keypoints[0].y < $Pose.keypoints[26].y || $Pose.keypoints[0].y < $Pose.keypoints[26].y){
+          return true
+        }
+        // return true
+        }
     }
     return false
   }
