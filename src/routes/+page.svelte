@@ -1,13 +1,16 @@
 <script>
   import PoseDetection from "@lib/PoseDetection.svelte";
   import Keypoints from "./Keypoints.svelte";
-  import DownDogTests from "./poses/DownDogTests.svelte";
-  import MountainPoseTest from "./poses/MountainPoseTest.svelte";
-  import MountainPose_ArmRaised from "./poses/MountainPose_ArmRaised.svelte";
-  import StandingForwardBend from "./poses/StandingForwardBend.svelte";
-  import ForwardBend from "./poses/ForwardBend.svelte";
-  import PlankPose from "./poses/PlankPose.svelte";
-  import UpwardFacingDog from "./poses/UpwardFacingDog.svelte";
+  import MountainPose from "./poses/1_MountainPose.svelte";
+  import MountainPose_ArmRaised from "./poses/2_MountainPose_ArmRaised.svelte";
+  import StandingForwardBend from "./poses/3_StandingForwardBend.svelte";
+  import ForwardBend from "./poses/4_ForwardBend.svelte";
+  import PlankPose from "./poses/5_PlankPose.svelte";
+  import UpwardFacingDog from "./poses/6_UpwardFacingDog.svelte";
+  import DownDog from "./poses/7_DownDogTests.svelte";
+  import StandingForwardBend2 from './poses/8_StandingForwardBend.svelte'
+  import ForwardBend2 from './poses/9_ForwardBend.svelte'
+  import MountainPoseArmRaised2 from "./poses/10_MountainPose_ArmRaised.svelte";
   import Setup from "@lib/Setup.svelte";
   import Voiceline from "@lib/Voiceline.svelte";
   import { addVoiceLine } from '@lib/speechQueue.js'
@@ -50,12 +53,26 @@
 {#if start_yoga}
   <Setup>
     {#if poseIndex == 0}
-      <MountainPoseTest on:complete={ () => poseIndex += 1 }/>
+      <MountainPose on:complete={ () => poseIndex += 1 }/>
     {:else if poseIndex == 1}
       <MountainPose_ArmRaised on:complete={ () => poseIndex += 1 }/>
     {:else if poseIndex == 2}
-      <DownDogTests on:complete={ () => poseIndex += 1 }/>
+      <StandingForwardBend on:complete={ () => poseIndex += 1 }/>
     {:else if poseIndex == 3}
+      <ForwardBend on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 4}
+      <PlankPose on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 5}
+      <UpwardFacingDog on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 6}
+      <DownDog on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 7}
+      <StandingForwardBend2 on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 8}
+      <ForwardBend2 on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 9}
+      <MountainPoseArmRaised2 on:complete={ () => poseIndex += 1 }/>
+    {:else if poseIndex == 10}
       <Voiceline txt={'Thats the program done, We hope you enjoyed and have a nice day ::)'}/>
     {/if}
   </Setup>
