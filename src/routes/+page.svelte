@@ -23,7 +23,10 @@
   
 </script>
 
+
 <ScreenTap>  
+  <Voiceline txt={'Welcome to voice yoga'}/>
+
   {#if start_yoga}
   <PoseDetection/> 
   <div class="instruction_box">
@@ -37,7 +40,6 @@
   >
       Back to Start
     </VoiceButton>
-    <Voiceline txt={'Welcome to voice yoga'}/>
   {:else}
     <Hero/>
   <VoiceButton
