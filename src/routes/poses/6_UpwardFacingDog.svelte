@@ -29,8 +29,9 @@
   </script>
 
   <section>
+    <Voiceline txt={'Take a deep breath and exhale as you lower your body down to the mat'}/>
+    
     {#if !complete}
-      <Voiceline txt={'Take a deep breath and exhale as you lower your body down to the mat'}/>
   
       <!-- PoseCheckList activates elements inside it one by one -->
       <!-- PoseCheckList Dispatches "complete" event when all test are passed -->

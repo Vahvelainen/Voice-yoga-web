@@ -45,8 +45,9 @@
 </script>
 
 <section>
+  <Voiceline txt={'Next is downwards facing dog'}/>
+  
   {#if !complete}
-    <Voiceline txt={'Next is downwards facing dog'}/>
 
     <!-- PoseCheckList activates elements inside it one by one -->
     <!-- PoseCheckList Dispatches "complete" event when all test are passed -->

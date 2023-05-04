@@ -32,8 +32,9 @@
 </script>
 
 <section>
-  {#if !complete}
   <Voiceline txt={'Place your palms again on the mat, and either jump or step backward so that you are on the upwards position of a push-up. Your shoulders should be over your wrists and your body in a straight line.'}/>
+  
+  {#if !complete}
 
     <!-- PoseCheckList activates elements inside it one by one -->
     <!-- PoseCheckList Dispatches "complete" event when all test are passed -->

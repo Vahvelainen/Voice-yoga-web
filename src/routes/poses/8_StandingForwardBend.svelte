@@ -44,8 +44,9 @@
 </script>
 
   <section>
+    <Voiceline txt={'With small steps, bring you feet back to the sides of your palms. Please recall the third pose you did previously'}/>
+    
     {#if !complete}
-      <Voiceline txt={'With small steps, bring you feet back to the sides of your palms. Please recall the third pose you did previously'}/>
       
       <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
         <PoseCheck test={feetHipWidthCheck}>

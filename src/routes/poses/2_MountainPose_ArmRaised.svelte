@@ -41,9 +41,10 @@
   </script>
   
   <section>
+
+    <Voiceline txt={'Stand at the front of your mat with your feet together and your hands raised up'}/>
+    
     {#if !complete}
-      <Voiceline txt={'Stand at the front of your mat with your feet together and your hands raised up'}/>
-      
       <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
         <PoseCheck test={feetTogetherCheck}>
           <Voiceline txt={'Make sure your feet are together and aligned'}/>

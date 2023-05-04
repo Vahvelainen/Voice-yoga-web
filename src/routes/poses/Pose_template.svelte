@@ -21,8 +21,10 @@
 </script>
 
 <section>
+  
+  <Voiceline txt={'Introduce the position'}/>
+
   {#if !complete}
-    <Voiceline txt={'Introduce the position'}/>
 
     <!-- PoseCheckList activates elements inside it one by one -->
     <!-- PoseCheckList Dispatches "complete" event when all test are passed -->

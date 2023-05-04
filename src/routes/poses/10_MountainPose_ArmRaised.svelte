@@ -41,8 +41,9 @@
 </script>
   
   <section>
+    <Voiceline txt={'Keep your body front facing the camera. Inhale and return to an upright po - sition. Rise and straighten your arms so that your palms meet. Recall the second pose'}/>
+    
     {#if !complete}
-      <Voiceline txt={'Keep your body front facing the camera. Inhale and return to an upright po - sition. Rise and straighten your arms so that your palms meet. Recall the second pose'}/>
       
       <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
         <PoseCheck test={feetTogetherCheck}>

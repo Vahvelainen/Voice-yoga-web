@@ -44,8 +44,9 @@
 </script>
 
 <section> 
+  <Voiceline txt={'Come to a standing position with your feet hip-width apart and your hands by your sides'}/>
+  
   {#if !complete}
-    <Voiceline txt={'Come to a standing position with your feet hip-width apart and your hands by your sides'}/>
 
     <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
       <PoseCheck test={feetHipWidthCheck}>
