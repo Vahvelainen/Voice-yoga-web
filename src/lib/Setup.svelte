@@ -67,6 +67,8 @@
 
 {#if !setup_complete }
   <Voiceline txt={'Place your device against the wall so that it stays upright and you have 2 meters in front of it for moving around'}/>
+  
+  {#if $Pose.available}
   <PoseCheckList on:complete={ () => setup_complete = true }>
     <!-- PoseChecks only shows its content when its activated -->
 
@@ -91,6 +93,7 @@
     </PoseCheck>
 
   </PoseCheckList>
+  {/if}
 {:else}
   <slot></slot>
 {/if}
