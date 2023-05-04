@@ -2,5 +2,18 @@ body {
   background-color: darkslategray;
   max-width: 500px;
   margin: auto;
-  font-family: 'Courier New', Courier, monospace;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("@lib/fonts/Inter-Regular.ttf") format("tff"),
+       url("@lib/fonts/Inter-Medium.ttf") format("tff"),
+       url("@lib/fonts/Inter-Bold.ttf") format("tff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: 'Inter';
+  color: white;
 }
