@@ -23,15 +23,17 @@
     }
 
   // Function to check if fingertips are touching the mat and the back is straight
+  // Function to check if fingertips are touching the mat and the back is straight
   function forwardBendCheck() {
     // Check that fingertips are touching the mat
     let right_fingertip_check = $Pose.keypoints[12].y - $Pose.keypoints[28].y
     let left_fingertip_check = $Pose.keypoints[11].y - $Pose.keypoints[27].y
+    let head_knee_distance = Math.min(Math.abs($Pose.keypoints[0].x - $Pose.keypoints[26].x), Math.abs($Pose.keypoints[0].x - $Pose.keypoints[25].x))
     if (right_fingertip_check >= -10 && left_fingertip_check >= -10) {
       // Check that the back is straight
       // let lefthip = $Pose.angles['leftHip']
       // let righthip = $Pose.angles['rightHip']
-      if ($Pose.keypoints[0].y > $Pose.keypoints[24].y || $Pose.keypoints[0].y > $Pose.keypoints[23].y){
+      if ($Pose.keypoints[0].y < $Pose.keypoints[24].y + 0.1 || $Pose.keypoints[0].y < $Pose.keypoints[23].y + 0.1){
         if ($Pose.keypoints[0].y < $Pose.keypoints[26].y || $Pose.keypoints[0].y < $Pose.keypoints[26].y){
           return true
         }
