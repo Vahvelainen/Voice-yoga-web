@@ -66,12 +66,12 @@
 </script>
 
 {#if !setup_complete }
+  <Voiceline txt={'Place your device against the wall so that it stays upright and you have 2 meters in front of it for moving around'}/>
   <PoseCheckList on:complete={ () => setup_complete = true }>
-
     <!-- PoseChecks only shows its content when its activated -->
 
     <PoseCheck test={ personPartlyInFrameTest }>
-      <Voiceline txt={'Place your device against the wall so that it stays upright and you have 2 meters in front of it for moving around'}/>
+      <!-- No instruction, just waits for person to get in picture -->
     </PoseCheck>
 
     <PoseCheck test={ feetInFrameTest }>
