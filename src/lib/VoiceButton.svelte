@@ -6,6 +6,8 @@
 
   export let phrases
   export let delete_after = false
+  export let color = '#0C6863'
+
 
   let delete_command = () => {}
 
@@ -18,7 +20,7 @@
   
 </script>
 
-<button on:click={ sendSelectEvent }>
+<button on:click={ sendSelectEvent } style="background-color: {color};">
   <slot></slot>
 </button>
 
@@ -26,8 +28,10 @@
   button {
     display: block;
     width: 100%;
-    height: 8em;
+    height: 4em;
     border: none;
     background-color: orange;
+    font-weight: bold;
+    font-size: 1.5em;
   }
 </style>

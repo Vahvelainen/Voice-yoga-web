@@ -10,6 +10,7 @@
   let start_yoga = false
 
   function startProgram() {
+    console.log('Starting program')
     addVoiceLine('Beginning yoga lesson')
     start_yoga = true
   }
@@ -24,28 +25,38 @@
 <ScreenTap>
   <PoseDetection/> 
   
-  {#if start_yoga}
-    <PoseIndex/>
-  {/if}
   
   <div class="instruction_box">
     <h2>{$SpeechQueue.latest}</h2>
   </div>
   
+  {#if start_yoga}
+    <PoseIndex/>
+    <VoiceButton
+      phrases={['stop', 'exit', 'cancel', 'quit']}
+      on:select={stopProgram}
+      color='#3F9C97'
+    >
+      Back to Start
+    </VoiceButton>
+    <Voiceline txt={'Welcome to voice yoga'}/>
+  {:else}
+    <VoiceButton
+      phrases={['start', 'begin', 'open', 'start session', "let's yoga", "start yoga"]}
+      on:select={startProgram}
+    >
+        Start lesson
+    </VoiceButton>
+  {/if}
+
   <VoiceButton
-    phrases={['start', 'begin', 'open', 'start session', "let's yoga", "start yoga"]}
-    on:select={startProgram}
+    phrases={['help', 'instructions']}
+    on:select={()=>false}
+    color='#FB6544'
   >
-    Start yoga
-  </VoiceButton>
+    Instructions
+</VoiceButton>
   
-  <VoiceButton
-    phrases={['stop', 'exit', 'cancel', 'quit']}
-    on:select={stopProgram}
-  >
-    Stop yoga
-  </VoiceButton>
-  <Voiceline txt={'Welcome to voice yoga'}/>
   
   <!-- <Keypoints/> -->
 </ScreenTap>
@@ -58,6 +69,6 @@
     justify-content: center;
     width: 100%;
     height: 8em;
-    background-color: gainsboro;
+    background-color: #0C2345;
   }
 </style>
