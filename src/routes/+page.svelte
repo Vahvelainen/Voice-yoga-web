@@ -6,6 +6,7 @@
   import VoiceButton from "../lib/VoiceButton.svelte";
   import PoseIndex from "./poses/PoseIndex.svelte";
   import ScreenTap from "./ScreenTap.svelte";
+  import Hero from "./Hero.svelte";
 
   let start_yoga = false
 
@@ -22,26 +23,24 @@
   
 </script>
 
-<ScreenTap>
+<ScreenTap>  
+  {#if start_yoga}
   <PoseDetection/> 
-  
-  
   <div class="instruction_box">
     <h2>{$SpeechQueue.latest}</h2>
   </div>
-  
-  {#if start_yoga}
-    <PoseIndex/>
-    <VoiceButton
-      phrases={['stop', 'exit', 'cancel', 'quit']}
-      on:select={stopProgram}
-      color='#3F9C97'
-    >
+  <PoseIndex/>
+  <VoiceButton
+  phrases={['stop', 'exit', 'cancel', 'quit']}
+  on:select={stopProgram}
+  color='#3F9C97'
+  >
       Back to Start
     </VoiceButton>
     <Voiceline txt={'Welcome to voice yoga'}/>
   {:else}
-    <VoiceButton
+    <Hero/>
+  <VoiceButton
       phrases={['start', 'begin', 'open', 'start session', "let's yoga", "start yoga"]}
       on:select={startProgram}
     >
@@ -63,6 +62,11 @@
 
 
 <style>
+  img {
+    width: 100%;
+    height: 45em;
+    object-fit: cover;
+  }
   .instruction_box {
     display: flex;
     align-items: center;
