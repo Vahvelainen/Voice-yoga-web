@@ -16,9 +16,6 @@
   import { addVoiceLine } from '@lib/speechQueue.js'
 
   import VoiceButton from "../lib/VoiceButton.svelte";
-    import StandingForwardBend_2 from "./poses/StandingForwardBend_2.svelte";
-    import MountainPoseArmRaised_2 from "./poses/MountainPose_ArmRaised_2.svelte";
-    import ForwardBend_2 from "./poses/ForwardBend_2.svelte";
 
   let poseIndex = 0
 
