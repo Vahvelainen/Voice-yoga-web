@@ -33,7 +33,7 @@
     aspect-ratio: 1;
     margin: auto;
     margin-top: 20vh;
-    background-color: lightgreen;
+    background-color: #3F9C97;
     border-radius: 9999px;
   }
   h2 {
