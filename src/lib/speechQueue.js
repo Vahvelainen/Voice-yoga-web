@@ -8,6 +8,7 @@ const rate = 0.8 //Speech rate slowed down due to user feedback
 // Model of empty Queue
 const speechQueueTemplate = {
   lines: [],
+  latest: "",
   speaking: false,
 }
 
@@ -47,6 +48,8 @@ function speakLines() {
     line = queue.lines? queue.lines[0] : undefined
     if (!line) {
       queue.speaking = false
+    } else {
+      queue.latest = line
     }
     return queue
   })

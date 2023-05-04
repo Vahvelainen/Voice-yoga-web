@@ -188,3 +188,8 @@
   </video>
 </div>
 
+<style>
+    canvas {
+        width: 100%;
+    }
+</style>

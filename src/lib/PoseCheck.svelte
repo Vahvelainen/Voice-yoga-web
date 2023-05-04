@@ -46,7 +46,7 @@
 
 <div bind:this={elem} pass={pass} active={active}>
   <!-- The divider should be hided when not in developement -->
-  <div class="pass_mark" style="background-color:{ pass? 'green' : 'red' };"></div>
+  <!-- <div class="pass_mark" style="background-color:{ pass? 'green' : 'red' };"></div> -->
   {#if active}
     <slot></slot>
   {/if}

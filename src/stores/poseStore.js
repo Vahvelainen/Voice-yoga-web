@@ -10,8 +10,8 @@ export const videoParams = {
 const poseTemplate = {
   available: false,
   onFrame: false,
-  keypoints: [],
-  keypoints2D: [],
+  keypoints: [], //One meter units, relative to 2m cube around the person
+  keypoints2D: [], //Relative to the camera, goof for framing
   angles: {},
 }
 
@@ -31,7 +31,7 @@ export const setPose = (keypoints = [], keypoints2D = [] ) => {
       return {
         available: true,
         keypoints: keypoints,
-        keypoints2D: keypoints2D, //Delete this
+        keypoints2D: keypoints2D,
         angles: calculateAngles(keypoints),
         onFrame: checkFrame(pose, pose.onFrame)
       }

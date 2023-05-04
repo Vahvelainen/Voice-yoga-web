@@ -21,3 +21,13 @@
 <button on:click={ sendSelectEvent }>
   <slot></slot>
 </button>
+
+<style>
+  button {
+    display: block;
+    width: 100%;
+    height: 8em;
+    border: none;
+    background-color: orange;
+  }
+</style>
