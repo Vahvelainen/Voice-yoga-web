@@ -28,11 +28,11 @@
     // Check that hands are on the mat
     let right_hand_check = $Pose.keypoints[16].y - $Pose.keypoints[26].y
     let left_hand_check = $Pose.keypoints[15].y - $Pose.keypoints[25].y
-    let head_knee_distance = Math.min($Pose.keypoints[0].x - $Pose.keypoints[26].x, $Pose.keypoints[0].x - $Pose.keypoints[25].x)
+    let head_knee_distance = Math.min(Math.abs($Pose.keypoints[0].x - $Pose.keypoints[26].x), Math.abs($Pose.keypoints[0].x - $Pose.keypoints[25].x))
     if (right_hand_check > 0 && left_hand_check > 0) {
       // Check that knees are straight
       if ($Pose.keypoints[0].y > $Pose.keypoints[26].y || $Pose.keypoints[0].y > $Pose.keypoints[26].y){
-        if (head_knee_distance < 0.5) {
+        if (head_knee_distance < 0.55) {
           return true
         }
       }
