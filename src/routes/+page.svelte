@@ -5,6 +5,7 @@
   import { SpeechQueue, addVoiceLine } from '@lib/speechQueue.js'
   import VoiceButton from "../lib/VoiceButton.svelte";
   import PoseIndex from "./poses/PoseIndex.svelte";
+  import ScreenTap from "./ScreenTap.svelte";
 
   let start_yoga = false
 
@@ -20,32 +21,35 @@
   
 </script>
 
-<PoseDetection/> 
+<ScreenTap>
+  <PoseDetection/> 
+  
+  {#if start_yoga}
+    <PoseIndex/>
+  {/if}
+  
+  <div class="instruction_box">
+    <h2>{$SpeechQueue.latest}</h2>
+  </div>
+  
+  <VoiceButton
+    phrases={['start', 'begin', 'open', 'start session', "let's yoga", "start yoga"]}
+    on:select={startProgram}
+  >
+    Start yoga
+  </VoiceButton>
+  
+  <VoiceButton
+    phrases={['stop', 'exit', 'cancel', 'quit']}
+    on:select={stopProgram}
+  >
+    Stop yoga
+  </VoiceButton>
+  <Voiceline txt={'Welcome to voice yoga'}/>
+  
+  <!-- <Keypoints/> -->
+</ScreenTap>
 
-{#if start_yoga}
-  <PoseIndex/>
-{/if}
-
-<div class="instruction_box">
-  <h2>{$SpeechQueue.latest}</h2>
-</div>
-
-<VoiceButton
-  phrases={['start', 'begin', 'open', 'start session', "let's yoga", "start yoga"]}
-  on:select={startProgram}
->
-  Start yoga
-</VoiceButton>
-
-<VoiceButton
-  phrases={['stop', 'exit', 'cancel', 'quit']}
-  on:select={stopProgram}
->
-  Stop yoga
-</VoiceButton>
-<Voiceline txt={'Welcome to voice yoga'}/>
-
-<!-- <Keypoints/> -->
 
 <style>
   .instruction_box {
