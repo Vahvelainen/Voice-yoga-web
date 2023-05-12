@@ -28,26 +28,22 @@
   <Voiceline txt={'Welcome to voice yoga'}/>
 
   {#if start_yoga}
-  <PoseDetection/> 
-  <div class="instruction_box">
-    <h2>{$SpeechQueue.latest}</h2>
-  </div>
-  <PoseIndex/>
-  <VoiceButton
-  phrases={['stop', 'exit', 'cancel', 'quit']}
-  on:select={stopProgram}
-  color='#3F9C97'
-  >
-      Back to Start
-    </VoiceButton>
+    <PoseDetection/> 
+    <div class="instruction_box">
+      <h2>{$SpeechQueue.latest}</h2>
+    </div>
+    <PoseIndex/>
+    <VoiceButton
+      phrases={['stop', 'exit', 'cancel', 'quit']}
+      on:select={stopProgram}
+      color='#3F9C97'
+    >Back to Start</VoiceButton>
   {:else}
     <Hero/>
-  <VoiceButton
-      phrases={['start', 'begin', 'open', 'start session', "let's yoga", "start yoga"]}
-      on:select={startProgram}
-    >
-        Start lesson
-    </VoiceButton>
+    <VoiceButton
+        phrases={['start', 'begin', 'open', 'start session', "let's yoga", "start yoga"]}
+        on:select={startProgram}
+    >Start lesson</VoiceButton>
   {/if}
 
   <VoiceButton
@@ -64,11 +60,6 @@
 
 
 <style>
-  img {
-    width: 100%;
-    height: 45em;
-    object-fit: cover;
-  }
   .instruction_box {
     display: flex;
     align-items: center;
