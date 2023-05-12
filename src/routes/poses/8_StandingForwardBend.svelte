@@ -44,7 +44,7 @@
 </script>
 
   <section>
-    <Voiceline txt={'With small steps, bring you feet back to the sides of your palms. Please recall the third pose you did previously'}/>
+    <Voiceline txt={'With small steps, bring you feet back to the sides of your palms.'}/>
     
     {#if !complete}
       

@@ -55,7 +55,7 @@
     </PoseCheck>
   
     <PoseCheck test={armsDownCheck}>
-      <Voiceline txt={'Relax your arms and let them hang naturally on the sides of your body'}/>
+      <Voiceline txt={'Relax your arms and let them hang freely on the sides of your body'}/>
     </PoseCheck>
         
   </PoseCheckList>

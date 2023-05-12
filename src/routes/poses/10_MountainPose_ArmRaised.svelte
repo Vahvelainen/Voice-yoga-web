@@ -41,7 +41,7 @@
 </script>
   
   <section>
-    <Voiceline txt={'Keep your body front facing the camera. Inhale and return to an upright po - sition. Rise and straighten your arms so that your palms meet. Recall the second pose'}/>
+    <Voiceline txt={'Inhale and return to an upright position. Lift your arms so that they are straight and your palms meet above your head.'}/>
     
     {#if !complete}
       

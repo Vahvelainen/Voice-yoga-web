@@ -42,7 +42,7 @@
   
   <section>
 
-    <Voiceline txt={'Stand at the front of your mat with your feet together and your hands raised up'}/>
+    <Voiceline txt={'Inhale and lift your arms straight up, and bring your palms together above your head.'}/>
     
     {#if !complete}
       <PoseCheckList on:complete={ () => setTimeout( () => dispatch('complete'), 10000 ) } bind:complete >
@@ -51,7 +51,7 @@
         </PoseCheck>
     
         <PoseCheck test={armsUpCheck}>
-          <Voiceline txt={'Inhale, lift your arms up over-head, and bring your palms together'}/>
+          <Voiceline txt={'Inhale, lift your arms up over your head, and bring your palms together'}/>
         </PoseCheck>
       </PoseCheckList>
     <!-- Advice for after the pose is done and user is waiting -->

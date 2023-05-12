@@ -45,7 +45,7 @@
 </script>
 
 <section> 
-  <Voiceline txt={'Straighten your back so that your’re looking forward. Please recall the fourth pose you did previously'}/>
+  <Voiceline txt={'Straighten your back so that you’re looking forward.'}/>
   
   {#if !complete}
 

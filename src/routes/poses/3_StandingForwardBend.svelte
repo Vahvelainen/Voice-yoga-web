@@ -54,7 +54,7 @@
         </PoseCheck>
 
         <PoseCheck test={forwardBendCheck}>
-          <Voiceline txt={'Exhale, bend forward from your waist and bring your hands down to the mat, on the sides of your feet. Bend your knees as little as possible'}/>
+          <Voiceline txt={'Exhale, bend forward from your waist and bring your hands down to the mat, to the sides of your feet. Bend your knees as little as possible'}/>
         </PoseCheck>
       </PoseCheckList>
     <!-- Advice for after the pose is done and user is waiting -->
