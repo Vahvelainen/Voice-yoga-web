@@ -1,5 +1,5 @@
-// The 3rd pose
 <script>
+  // The 3rd pose
     import Pose from '@stores/poseStore' 
     import Voiceline from '@lib/VoiceLine.svelte'
     import PoseCheck from '@lib/PoseCheck.svelte';

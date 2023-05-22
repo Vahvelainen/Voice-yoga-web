@@ -1,5 +1,5 @@
-// The 8th pose
 <script>
+  // The 8th pose
   import Pose from '@stores/poseStore' 
   import Voiceline from '@lib/VoiceLine.svelte'
   import PoseCheck from '@lib/PoseCheck.svelte';

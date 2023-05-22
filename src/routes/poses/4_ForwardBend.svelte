@@ -1,5 +1,5 @@
-// The 4th pose
 <script>
+  // The 4th pose
   import Pose from '@stores/poseStore'
   import Voiceline from '@lib/VoiceLine.svelte'
   import PoseCheck from '@lib/PoseCheck.svelte'
